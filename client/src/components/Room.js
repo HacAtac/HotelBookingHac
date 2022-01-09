@@ -21,6 +21,7 @@ function Room({ room }) {
           <p>Max Count : {room.maxcount}</p>
           <p>Phone Number : {room.phonenumber}</p>
           <p>Type : {room.type}</p>
+          <p>Price : {room.rentperday}</p>
         </b>
 
         <div style={{ float: "right" }}>
