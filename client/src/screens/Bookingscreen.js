@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 function Bookingscreen({ match }) {
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState();
@@ -19,12 +20,12 @@ function Bookingscreen({ match }) {
       }
     };
     fetchData();
-  }, [match.params.roomid]);
+  }, []);
 
 
   return (
     <div className="m-5">
-          {loading ? (<h1>Loading...</h1>) : error ? (<h1>Error...</h1>) : (<div>
+          {loading ? (<Loader />) : room ?  (<div>
 
             <div className="row justify-content-center mt-5 bs">
               <div className="col-md-6">
@@ -57,9 +58,13 @@ function Bookingscreen({ match }) {
 
 
 
-          </div>)}
+          </div>) : (<Error />)}
     </div>
   );
 }
 
+
+
 export default Bookingscreen;
+
+

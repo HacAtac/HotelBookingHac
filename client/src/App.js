@@ -8,7 +8,7 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Route path="/" exact component={Homescreen} />
-        <Route path="/room/:roomid" component={Bookingscreen} />
+        <Route path="/book/:roomid" exact component={Bookingscreen} />
       </BrowserRouter>
     </div>
   );
