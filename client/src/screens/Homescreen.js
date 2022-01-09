@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+//import the Room.js component
+import Room from "./Room";
 
 function Homescreen() {
   const [rooms, setrooms] = useState([]);
@@ -15,21 +17,25 @@ function Homescreen() {
     } catch (error) {
       seterror(true);
       console.log(error);
-      setloading = false;
+      setloading(false);
     }
   }, []);
 
   return (
-    <div>
-      {loading ? (
-        <h1>Loading....</h1>
-      ) : error ? (
-        <h1>Error</h1>
-      ) : (
-        rooms.map((room) => {
-          return <h1>{room.name}</h1>;
-        })
-      )}
+    <div className="container">
+      <div className="row justify-content-center mt-5">
+        {loading ? (
+          <h1>Loading....</h1>
+        ) : error ? (
+          <h1>Error....</h1>
+        ) : (
+          rooms.map((room) => {
+            return <div className="col-md-9 mt-2">
+                <Room room={room} />
+              </div>
+            })
+        )}
+      </div>
     </div>
   );
 }
