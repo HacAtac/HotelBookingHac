@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <Navbar />
       <BrowserRouter>
-        <Route path="/home" exact component={Homescreen} />
+        <Route path="/" exact component={Homescreen} />
       </BrowserRouter>
     </div>
   );
