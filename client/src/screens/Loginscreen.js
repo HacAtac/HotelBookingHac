@@ -20,7 +20,7 @@ function Loginscreen() {
       setloading(false);
       //   console.log(result);
 
-      localStorage.setitem("currentuser", JSON.stringify(result));
+      localStorage.setItem("currentuser", JSON.stringify(result));
       window.location.href = "/";
     } catch (error) {
       console.log(error);
