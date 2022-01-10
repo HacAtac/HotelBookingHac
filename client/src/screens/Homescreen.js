@@ -3,6 +3,8 @@ import axios from "axios";
 import "antd/dist/antd.css";
 //import the Room.js component
 import Room from "../components/Room";
+//import the booking.js model
+
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
@@ -16,6 +18,8 @@ function Homescreen() {
 
   const [fromdate, setfromdate] = useState();
   const [todate, settodate] = useState();
+  //Going to use state for duplicate rooms so that we can remove them from the list if they are already booked
+  const [duplicaterooms, setduplicaterooms] = useState([]);
 
   // async useEffect hook to fetch the rooms from the server with axios
   useEffect(() => {
@@ -24,6 +28,7 @@ function Homescreen() {
       try {
         const result = (await axios.get("/api/rooms/getallrooms")).data;
         setrooms(result);
+        setduplicaterooms(result);
         setloading(false);
       } catch (error) {
         seterror(true);
@@ -39,6 +44,38 @@ function Homescreen() {
     // console.log(moment(dates[1]).format("DD-MM-YYYY"));
     setfromdate(moment(dates[0]).format("DD-MM-YYYY"));
     settodate(moment(dates[1]).format("DD-MM-YYYY"));
+
+    let temprooms = [];
+    let availability = false;
+    for (const room of duplicaterooms) {
+      if (room.currentbookings.length > 0) {
+        for (const booking of room.currentbookings) {
+          if (
+            !moment(moment(dates[0]).format("DD-MM-YYYY")).isBetween(
+              booking.fromdate,
+              booking.todate
+            ) &&
+            !moment(moment(dates[1]).format("DD-MM-YYYY")).isBetween(
+              booking.fromdate,
+              booking.todate
+            )
+          ) {
+            if (
+              moment(dates[0]).format("DD-MM-YYYY") !== booking.fromdate &&
+              moment(dates[0]).format("DD-MM-YYYY") !== booking.todate &&
+              moment(dates[1]).format("DD-MM-YYYY") !== booking.fromdate &&
+              moment(dates[1]).format("DD-MM-YYYY") !== booking.todate
+            ) {
+              availability = true;
+            }
+          }
+        }
+      }
+      if (availability === true || room.currentbookings.length === 0) {
+        temprooms.push(room);
+      }
+      setrooms(temprooms);
+    }
   }
 
   return (
