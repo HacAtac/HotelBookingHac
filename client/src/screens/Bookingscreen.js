@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
+import Swal from "sweetalert2";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
@@ -50,9 +51,20 @@ function Bookingscreen({ match }) {
       token,
     };
     try {
+      setloading(true);
       const result = await axios.post("/api/bookings/bookroom", bookingDetails);
+      setloading(false);
+      Swal.fire(
+        "Congratulations",
+        "Thank you for booking with us. Your booking id is " + result.data,
+        "success"
+      ).then((result) => {
+        window.location.href = "/bookings";
+      });
     } catch (error) {
       console.log(error);
+      setloading(false);
+      Swal.fire("Oops", "Something went wrong", "error");
       console.log({ bookingDetails });
     }
   }
