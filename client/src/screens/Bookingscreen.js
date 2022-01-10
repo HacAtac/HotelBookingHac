@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import StripeCheckout from "react-stripe-checkout";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
@@ -54,6 +55,10 @@ function Bookingscreen({ match }) {
     }
   }
 
+  function onToken(token) {
+    console.log(token);
+  }
+
   return (
     <div className="m-5">
       {loading ? (
@@ -89,9 +94,14 @@ function Bookingscreen({ match }) {
               </b>
             </div>
             <div style={{ float: "right" }}>
-              <button className="btn btn-primary" onClick="{bookRoom}">
-                Pay Now
-              </button>
+              <StripeCheckout
+                amount={totalamount * 100}
+                token={onToken}
+                currency="USD"
+                stripeKey="pk_test_51KGGcjDQw3iOHoMjGmIYfxSZYBPdKjlyNY9C5XexdLbB5BdS68lD6Ittw0vW5Om1b1wBJJvKz5iXxFrloofkboVa00alz32OHF"
+              >
+                <button className="btn btn-primary">Pay Now</button>
+              </StripeCheckout>
             </div>
           </div>
         </div>
