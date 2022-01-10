@@ -24,11 +24,14 @@ function Room({ room, fromdate, todate }) {
           <p>Type : {room.type}</p>
           <p>Price : {room.rentperday}</p>
         </b>
-
+        {/* Line 27-33 is used to hide the book now btn if no date is selected. */}
         <div style={{ float: "right" }}>
-          <Link to={`/book/${room._id}/${fromdate}/${todate}`}>
-            <button className="btn btn-primary">Book Now</button>
-          </Link>
+          {fromdate && todate && (
+            <Link to={`/book/${room._id}/${fromdate}/${todate}`}>
+              <button className="btn btn-primary">Book Now</button>
+            </Link>
+          )}
+
           <button className="btn btn-primary" onClick={handleShow}>
             View Details
           </button>
