@@ -38,7 +38,8 @@ function Bookingscreen({ match }) {
     fetchData();
   }, []);
 
-  async function bookRoom() {
+  async function onToken(token) {
+    console.log(token);
     const bookingDetails = {
       room,
       user: JSON.parse(localStorage.getItem("currentuser")),
@@ -46,6 +47,7 @@ function Bookingscreen({ match }) {
       todate,
       totalamount,
       totaldays,
+      token,
     };
     try {
       const result = await axios.post("/api/bookings/bookroom", bookingDetails);
@@ -53,10 +55,6 @@ function Bookingscreen({ match }) {
       console.log(error);
       console.log({ bookingDetails });
     }
-  }
-
-  function onToken(token) {
-    console.log(token);
   }
 
   return (
